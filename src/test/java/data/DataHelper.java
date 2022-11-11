@@ -1,6 +1,7 @@
 package data;
 
 import lombok.Value;
+import page.MainPage;
 
 public class DataHelper {
 
@@ -21,7 +22,7 @@ public class DataHelper {
         return new CardData("4444 4444 4444 4442", "10", "26", "Ivan Ivanov", "123");
     }
 
-
+    //
 
     public static CardData getEmptyFieldsCard() {
         return new CardData("", "", "", "", "");
@@ -52,6 +53,55 @@ public class DataHelper {
     }
 
     //
+
+    public static CardData getInvalidYearIfOneSym() {
+        return new CardData("4444 4444 4444 4441", "10", "2", "Ivan Ivanov", "123");
+    }
+
+    public static CardData getInvalidYearIfBeforeCurrentYear() {
+        return new CardData("4444 4444 4444 4441", "10", "19", "Ivan Ivanov", "123");
+    }
+
+    public static CardData getInvalidYearIfZero() {
+        return new CardData("4444 4444 4444 4441", "10", "00", "Ivan Ivanov", "123");
+    }
+
+    //
+
+    public static CardData getInvalidCardholderNameIfLessThanTwo() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Ivan", "123");
+    }
+
+    public static CardData getInvalidCardholderNameIfMoreThanTwo() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Ivanov Ivan Ivan", "123");
+    }
+
+    public static CardData getInvalidCardholderNameIfCyrillic() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Иван Иванов", "123");
+    }
+
+    public static CardData getInvalidCardholderNameIfNumeric() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "0000", "123");
+    }
+
+    public static CardData getInvalidCardholderNameIfSymbol() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "#%№", "123");
+    }
+
+    //
+
+    public static CardData getInvalidCvvIfOneSym() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Ivan Ivanov", "1");
+    }
+
+    public static CardData getInvalidCvvIfTwoSym() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Ivan Ivanov", "12");
+    }
+
+    public static CardData getInvalidCvvIfThreeZero() {
+        return new CardData("4444 4444 4444 4441", "10", "26", "Ivan Ivanov", "000");
+    }
+
 
 
 
