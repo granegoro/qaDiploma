@@ -33,7 +33,9 @@ public class PaymentPage {
 
     private final SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
 
-    public void getPaymentInfo(DataHelper.CardData cardData) {
+    private final SelenideElement pushedContinueButton = $(".button_disabled");
+
+    public void makePayment(DataHelper.CardData cardData) {
         cardNumberField.setValue(cardData.getNumber());
         monthField.setValue(cardData.getMonth());
         yearField.setValue(cardData.getYear());
@@ -41,6 +43,8 @@ public class PaymentPage {
         cvvField.setValue(cardData.getCvv());
         continueButton.click();
     }
+
+    public void setPushedContinueButton() {pushedContinueButton.shouldBe(visible);}
 
     public void improperFormatError() {
         improperFormatError.shouldBe(visible);

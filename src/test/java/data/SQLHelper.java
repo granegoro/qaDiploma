@@ -33,4 +33,26 @@ public class SQLHelper {
 
     //Добавить выдачу списка всех операций
 
+//    @Test
+//    @SneakyThrows
+//    void stubTest() {
+//        var countSQL = "SELECT COUNT(*) FROM users;";
+//        var usersSQL = "SELECT * FROM users;";
+//        var runner = new QueryRunner();
+//
+//        try (
+//                var conn = DriverManager.getConnection(
+//                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+//                );
+//        ) {
+//            var count = runner.query(conn, countSQL, new ScalarHandler<>());
+//            System.out.println(count);
+//            var first = runner.query(conn, usersSQL, new BeanHandler<>(User.class));
+//            System.out.println(first);
+//            var all = runner.query(conn, usersSQL, new BeanListHandler<>(User.class));
+//            System.out.println(all);
+//        }
+//    }
+//}
+
 }

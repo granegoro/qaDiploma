@@ -15,13 +15,13 @@ public class MainPage {
 
     public PaymentPage payWithCard() {
         payWithCardButton.click();
-        paymentHeading.shouldHave(text("Оплата по карте"));
+        paymentHeading.shouldHave(text("Оплата по карте")).shouldBe(visible);
         return new PaymentPage();
     }
 
     public PaymentPage payWithCredit() {
         payWithCreditButton.click();
-        paymentHeading.shouldHave(text("Кредит по данным карты"));
+        paymentHeading.shouldHave(text("Кредит по данным карты")).shouldBe(visible);
         return new PaymentPage();
     }
 }
