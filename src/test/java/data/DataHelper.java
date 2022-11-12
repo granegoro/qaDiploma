@@ -74,7 +74,7 @@ public class DataHelper {
     }
 
     public static String generateValidHolderName(String locale) {
-        String name = faker.address().firstName() + faker.address().lastName();
+        String name = faker.address().firstName() + " " + faker.address().lastName();
         return name;
     }
 
@@ -115,177 +115,176 @@ public class DataHelper {
         return cvv;
     }
 
-//    public static class Payment {
-//        private Payment() {
-//        }
-//
-//    public static CardData generateValidApprovedCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateValidDeclinedCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateDeclinedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateEmptyFieldsCard() {
-//        return new CardData("", "", "", "", "");
-//    }
-//
-//    public static CardData generateInsufficientNumberCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateInvalidCardNumberIfLessSymbols(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateOutOfBaseNumberCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateInvalidCardNumberIfOutOfBase(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateOneFigureMonthCard(String locale, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateOneFigureDate(),
-//                generateYear(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateOneFigureYearCard(String locale, int monthShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateYear(monthShift),
-//                generateOneFigureDate(),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateZeroDateCard(String locale, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateDateZeros(),
-//                generateDateZeros(),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generatePastDateCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonthInPast(monthShift),
-//                generateYearInPast(yearShift),
-//                generateValidHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateInsufficientHolderCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateInsufficientHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateExtensiveHolderCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateExtensiveHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateCyrillicHolderCard(String locale, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateCyrillicHolderName(locale),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateNumericHolderCard(int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateNumericHolderName(),
-//                generateCVV()
-//        );
-//    }
-//
-//    public static CardData generateInsufficientCVV(int figure, int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateNumericHolderName(),
-//                generateCVVLessThanThreeFigures(figure)
-//        );
-//    }
-//
-//    public static CardData generateZeroCVV(int monthShift, int yearShift) {
-//
-//        return new CardData(
-//                generateApprovedCardNumber(),
-//                generateMonth(monthShift),
-//                generateYear(yearShift),
-//                generateNumericHolderName(),
-//                generateCVVZeros()
-//        );
-//    }
+    public static class Payment {
+        private Payment() {
+        }
+
+        public static CardData generateValidApprovedCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateValidDeclinedCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateDeclinedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateEmptyFieldsCard() {
+            return new CardData("", "", "", "", "");
+        }
+
+        public static CardData generateInsufficientNumberCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateInvalidCardNumberIfLessSymbols(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateOutOfBaseNumberCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateInvalidCardNumberIfOutOfBase(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateOneFigureMonthCard(String locale, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateOneFigureDate(),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateOneFigureYearCard(String locale, int monthShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateYear(monthShift),
+                    generateOneFigureDate(),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateZeroDateCard(String locale, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateDateZeros(),
+                    generateDateZeros(),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generatePastDateCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonthInPast(monthShift),
+                    generateYearInPast(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateInsufficientHolderCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateInsufficientHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateExtensiveHolderCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateExtensiveHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateCyrillicHolderCard(String locale, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateCyrillicHolderName(locale),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateNumericHolderCard(int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateNumericHolderName(),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateInsufficientCVV(int figure, int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateNumericHolderName(),
+                    generateCVVLessThanThreeFigures(figure)
+            );
+        }
+
+        public static CardData generateZeroCVV(int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateNumericHolderName(),
+                    generateCVVZeros()
+            );
+        }
 
 
-
-    @Value
-    public static class CardData {
-        String number;
-        String month;
-        String year;
-        String holder;
-        String cvv;
+        @Value
+        public static class CardData {
+            String number;
+            String month;
+            String year;
+            String holder;
+            String cvv;
+        }
     }
 }
-//}

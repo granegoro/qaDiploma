@@ -4,6 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import data.DataHelper;
 
+import javax.xml.crypto.Data;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
@@ -35,7 +36,16 @@ public class PaymentPage {
 
     private final SelenideElement pushedContinueButton = $(".button_disabled");
 
-    public void makePayment(DataHelper.CardData cardData) {
+    public void makePayment(DataHelper.Payment.CardData cardData) {
+
+
+//        cardNumberField.setValue(dataHelper.generateApprovedCardNumber());
+//        monthField.setValue(dataHelper.generateMonth(3));
+//        yearField.setValue(dataHelper.generateYear(3));
+//        cardholderField.setValue(dataHelper.generateValidHolderName("en"));
+//        cvvField.setValue(dataHelper.generateCVV());
+//        continueButton.click();
+
         cardNumberField.setValue(cardData.getNumber());
         monthField.setValue(cardData.getMonth());
         yearField.setValue(cardData.getYear());

@@ -25,10 +25,9 @@ public class SQLHelper {
     @SneakyThrows
     public static void cleanDatabase() {
         var connection = getConn();
-        runner.execute(connection, "DELETE FROM auth_codes");
-        runner.execute(connection, "DELETE FROM card_transactions");
-        runner.execute(connection, "DELETE FROM cards");
-        runner.execute(connection, "DELETE FROM users");
+        runner.execute(connection, "DELETE FROM app.order_entity");
+        runner.execute(connection, "DELETE FROM app.payment_entity");
+        runner.execute(connection, "DELETE FROM app.credit_request_entity");
     }
 
     //Добавить выдачу списка всех операций
