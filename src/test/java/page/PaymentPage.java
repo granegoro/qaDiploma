@@ -44,31 +44,36 @@ public class PaymentPage {
         continueButton.click();
     }
 
-    public void setPushedContinueButton() {pushedContinueButton.shouldBe(visible);}
 
-    public void improperFormatError() {
-        improperFormatError.shouldBe(visible);
-    }
+    public void findPushedContinueButton() {pushedContinueButton.shouldBe(visible);}
 
-    public void emptyFieldError() {
-        emptyFieldError.shouldBe(visible);
-    }
-
-    public void invalidDateError() {
-        invalidDateError.shouldBe(visible);
-    }
-
-    public void expiredDateError() {
-        expiredDateError.shouldBe(visible);
-    }
-
-    public void successMessage() {
+    public void findSuccessMessage() {
         statusMessage.shouldHave(text("Операция одобрена Банком")).shouldBe(visible, Duration.ofSeconds(15));
     }
-
-    public void failureMessage() {
+    public void findFailureMessage() {
         statusMessage.shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldBe(visible, Duration.ofSeconds(15));
     }
+
+    public void findImproperFormatError() {
+        improperFormatError.shouldBe(visible);
+    }
+
+    public void findEmptyFieldError() {
+        emptyFieldError.shouldBe(visible);
+    }
+
+    public void findInvalidDateError() {
+        invalidDateError.shouldBe(visible);
+    }
+
+    public void findExpiredDateError() {
+        expiredDateError.shouldBe(visible);
+    }
+
+
+    //
+
+
 
 }

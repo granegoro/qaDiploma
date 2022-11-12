@@ -14,10 +14,10 @@ public class PayWithCardTest {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
-    @BeforeEach
-    void setUpSutUrl() {
-        open("http://localhost:8080", MainPage.class);
-    }
+//    @BeforeEach
+//    void setUpSutUrl() {
+//        open("http://localhost:8080", MainPage.class);
+//    }
 
     @AfterAll
     static void tearDownAll() {
@@ -28,6 +28,8 @@ public class PayWithCardTest {
 
     @Test
     void shouldSuccessfullyPayWithCard() {
+
+        var mainPage = open(localhost)
 
 
     }
