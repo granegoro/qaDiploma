@@ -29,12 +29,18 @@ public class PaymentPage {
     private final SelenideElement statusMessage = $(".notification");
 
     private final SelenideElement successMessage = $(byText("Операция одобрена Банком"));
-
     private final SelenideElement failureMessage = $(byText("Ошибка! Банк отказал в проведении операции."));
 
     private final SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
-
     private final SelenideElement pushedContinueButton = $(".button_disabled");
+
+    private final ElementsCollection errorFieldSet = $$(".input_invalid .input__sub");
+    private final SelenideElement emptyCardFieldError = errorFieldSet.get(0);
+    private final SelenideElement emptyMonthFieldError = errorFieldSet.get(1);
+    private final SelenideElement emptyYearFieldError = errorFieldSet.get(2);
+    private final SelenideElement emptyHolderFieldError = errorFieldSet.get(3);
+    private final SelenideElement emptyCvvFieldError = errorFieldSet.get(4);
+
 
     public void makePayment(DataHelper.Payment.CardData cardData) {
 
@@ -55,11 +61,14 @@ public class PaymentPage {
     }
 
 
-    public void findPushedContinueButton() {pushedContinueButton.shouldBe(visible);}
+    public void findPushedContinueButton() {
+        pushedContinueButton.shouldBe(visible);
+    }
 
     public void findSuccessMessage() {
         statusMessage.shouldHave(text("Операция одобрена Банком")).shouldBe(visible, Duration.ofSeconds(15));
     }
+
     public void findFailureMessage() {
         statusMessage.shouldHave(text("Ошибка! Банк отказал в проведении операции."))
                 .shouldBe(visible, Duration.ofSeconds(15));
@@ -73,6 +82,19 @@ public class PaymentPage {
         emptyFieldError.shouldBe(visible);
     }
 
+
+    public void findEmptyFieldErrors() {
+        emptyCardFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+        emptyMonthFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+        emptyYearFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+        emptyHolderFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+        emptyCvvFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+    }
+
+//    public void findEmptyHolderFieldError() {
+//        emptyHolderFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
+//    }
+
     public void findInvalidDateError() {
         invalidDateError.shouldBe(visible);
     }
@@ -80,10 +102,4 @@ public class PaymentPage {
     public void findExpiredDateError() {
         expiredDateError.shouldBe(visible);
     }
-
-
-    //
-
-
-
 }
