@@ -44,6 +44,13 @@ public class DataHelper {
         return month;
     }
 
+    public static String generateUnrealMonth() {
+        var date = new String[]{
+                "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"
+        };
+        return date[new Random().nextInt(date.length)];
+    }
+
     public static String generateMonthInPast(int monthShift) {
         String month = LocalDate.now().minusMonths(monthShift).format(DateTimeFormatter.ofPattern("MM"));
         return month;
@@ -83,11 +90,16 @@ public class DataHelper {
         return name;
     }
 
-    public static String generateNumericHolderName() {
+    public static String generateSymbolicHolderName() {
         var name = new String[]{
                 "*%&^@", "#@$", "!@%"
         };
         return name[new Random().nextInt(name.length)];
+    }
+
+    public static String generateNumericHolderName() {
+        String name = faker.address().streetAddressNumber() + faker.address().streetAddressNumber();
+        return name;
     }
 
     public static String generateInsufficientHolderName(String locale) {
@@ -142,6 +154,7 @@ public class DataHelper {
         }
 
         public static CardData generateEmptyFieldsCard() {
+
             return new CardData("", "", "", "", "");
         }
 
@@ -211,6 +224,17 @@ public class DataHelper {
             );
         }
 
+        public static CardData generateUnrealMonthCard(String locale, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateUnrealMonth(),
+                    generateYear(yearShift),
+                    generateValidHolderName(locale),
+                    generateCVV()
+            );
+        }
+
         public static CardData generateInsufficientHolderCard(String locale, int monthShift, int yearShift) {
 
             return new CardData(
@@ -255,7 +279,18 @@ public class DataHelper {
             );
         }
 
-        public static CardData generateInsufficientCVV(int figure, int monthShift, int yearShift) {
+        public static CardData generateSymbolicHolderCard(int monthShift, int yearShift) {
+
+            return new CardData(
+                    generateApprovedCardNumber(),
+                    generateMonth(monthShift),
+                    generateYear(yearShift),
+                    generateSymbolicHolderName(),
+                    generateCVV()
+            );
+        }
+
+        public static CardData generateInsufficientCvvCard(int figure, int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
@@ -266,7 +301,7 @@ public class DataHelper {
             );
         }
 
-        public static CardData generateZeroCVV(int monthShift, int yearShift) {
+        public static CardData generateZeroCvvCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),

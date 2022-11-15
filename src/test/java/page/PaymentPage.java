@@ -54,7 +54,7 @@ public class PaymentPage {
 
 
     public void findPushedContinueButton() {
-        pushedContinueButton.shouldBe(visible);
+        pushedContinueButton.shouldBe(visible, Duration.ofSeconds(20));
     }
 
     public void findSuccessMessage() {
@@ -62,8 +62,7 @@ public class PaymentPage {
     }
 
     public void findFailureMessage() {
-        statusMessage.shouldHave(text("Ошибка! Банк отказал в проведении операции."))
-                .shouldBe(visible, Duration.ofSeconds(15));
+        failureMessage.shouldBe(visible, Duration.ofSeconds(20));
     }
 
     public void findImproperFormatError() {

@@ -27,11 +27,13 @@ public class PayWithCardTest {
 //        SQLHelper.cleanDatabase();
     }
 
+    //Debit
+
     @Test
-    void shouldSuccessfullyPayWithCard() {
+    void shouldPassIfValidApprovedCard() {
 
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
+        var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
                 .generateValidApprovedCard("en", 3, 3);
         paymentPage.makePayment(card);
@@ -40,9 +42,48 @@ public class PayWithCardTest {
     }
 
     @Test
+    void shouldFailIfValidDeclinedCard() {
+
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateValidDeclinedCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findPushedContinueButton();
+        paymentPage.findFailureMessage();
+    }
+
+    //Credit
+
+    @Test
+    void shouldPassIfValidApprovedCredit() {
+
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCredit();
+        var card = DataHelper.Payment
+                .generateValidDeclinedCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findPushedContinueButton();
+        paymentPage.findSuccessMessage();
+    }
+    @Test
+    void shouldFailIfValidDeclinedCredit() {
+
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCredit();
+        var card = DataHelper.Payment
+                .generateValidDeclinedCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findPushedContinueButton();
+        paymentPage.findFailureMessage();
+    }
+
+    // Blank fields
+
+    @Test
     void shouldFailIfBlankFields() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
+        var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateEmptyFieldsCard();
         paymentPage.makePayment(card);
         paymentPage.findEmptyFieldErrors();
@@ -53,8 +94,9 @@ public class PayWithCardTest {
     @Test
     void shouldFailIfInsufficientCardNumber() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
-        var card = DataHelper.Payment.generateInsufficientNumberCard("en", 3, 3);
+        var paymentPage = mainPage.payWithCredit();
+        var card = DataHelper.Payment
+                .generateInsufficientNumberCard("en", 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
@@ -62,60 +104,146 @@ public class PayWithCardTest {
     @Test
     void shouldFailIfOutOfBaseCardNumber() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
-        var card = DataHelper.Payment.generateOutOfBaseNumberCard("en", 3, 3);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateOutOfBaseNumberCard("en", 3, 3);
         paymentPage.makePayment(card);
-        paymentPage.findImproperFormatError();
+        paymentPage.findFailureMessage();
     }
 
+    // Date
     @Test
     void shouldFailIfOneFigureMonthCardNumber() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
+        var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateOneFigureMonthCard("en", 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
-    void shouldFailIfOneFigureYearCardNumber() {
+     void shouldFailIfOneFigureYearCardNumber() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
-        var card = DataHelper.Payment.generateOneFigureMonthCard("en", 3);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generateOneFigureYearCard("en", 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
-    void shouldFailIfZerosCardNumber() {
+    void shouldFailIfZerosDate() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
+        var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateZeroDateCard("en");
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
-    void shouldFailIfDateInPastCardNumber() {
+    void shouldFailIfMonthInPast() {
         var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage= mainPage.payWithCard();
-        var card = DataHelper.Payment.generatePastDateCard("en", 3, 3);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generatePastDateCard("en", 3, 0);
         paymentPage.makePayment(card);
-        paymentPage.findImproperFormatError();
+        paymentPage.findExpiredDateError();
+    }
+
+    @Test
+    void shouldFailIfYearInPast() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generatePastDateCard("en", 0, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findExpiredDateError();
+    }
+
+    @Test
+    void shouldFailIfUnrealMonth() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generateUnrealMonthCard("en",  3);
+        paymentPage.makePayment(card);
+        paymentPage.findInvalidDateError();
+    }
+
+    @Test
+    void shouldFailIfTooFarFutureYear() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateValidApprovedCard("en", 3, 10);
+        paymentPage.makePayment(card);
+        paymentPage.findInvalidDateError();
     }
 
     //Holder name field validation
 
-//    var loginPage = open("http://localhost:9999", LoginPageV2.class);
-//    var authInfo = DataHelper.getAuthInfo();
-//    var verificationPage = loginPage.validLogin(authInfo);
-//    var verificationCode = DataHelper.getVerificationCode();
-//    var dashboardPage = verificationPage.validVerify(verificationCode);
-//    var firstCardInfo = getFirstCardInfo();
-//    var secondCardInfo = getSecondCardInfo();
-//    var firstCardBalance = dashboardPage.getCardBalance(firstCardInfo);
-//    var secondCardBalance = dashboardPage.getCardBalance(secondCardInfo);
-//    var amount = generateValidAmount(firstCardBalance);
-//    var expectedBalanceFirstCard = firstCardBalance - amount;
-//    var expectedBalanceSecondCard = secondCardBalance + amount;
+    @Test
+    void shouldFailIfInsufficientHolder() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateInsufficientHolderCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfExtensiveHolder() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateExtensiveHolderCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfCyrillicHolder() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateCyrillicHolderCard("ru", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfNumericHolder() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generateNumericHolderCard(3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfSymbolicHolder() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generateSymbolicHolderCard(3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    //CVV
+
+    @Test
+    void shouldFailIfInsufficientCvv() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment
+                .generateInsufficientCvvCard(3, 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfIfZerosCvv() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage = mainPage.payWithCard();
+        var card = DataHelper.Payment.generateZeroCvvCard(3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
 }
