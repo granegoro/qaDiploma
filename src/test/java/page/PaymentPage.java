@@ -28,7 +28,7 @@ public class PaymentPage {
 
     private final SelenideElement statusMessage = $(".notification");
 
-    private final SelenideElement successMessage = $(byText("Операция одобрена Банком"));
+    private final SelenideElement successMessage = $(byText("Операция одобрена Банком."));
     private final SelenideElement failureMessage = $(byText("Ошибка! Банк отказал в проведении операции."));
 
     private final SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
@@ -44,14 +44,6 @@ public class PaymentPage {
 
     public void makePayment(DataHelper.Payment.CardData cardData) {
 
-
-//        cardNumberField.setValue(dataHelper.generateApprovedCardNumber());
-//        monthField.setValue(dataHelper.generateMonth(3));
-//        yearField.setValue(dataHelper.generateYear(3));
-//        cardholderField.setValue(dataHelper.generateValidHolderName("en"));
-//        cvvField.setValue(dataHelper.generateCVV());
-//        continueButton.click();
-
         cardNumberField.setValue(cardData.getNumber());
         monthField.setValue(cardData.getMonth());
         yearField.setValue(cardData.getYear());
@@ -66,7 +58,7 @@ public class PaymentPage {
     }
 
     public void findSuccessMessage() {
-        statusMessage.shouldHave(text("Операция одобрена Банком")).shouldBe(visible, Duration.ofSeconds(15));
+        successMessage.shouldBe(visible, Duration.ofSeconds(20));
     }
 
     public void findFailureMessage() {

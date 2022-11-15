@@ -189,7 +189,7 @@ public class DataHelper {
             );
         }
 
-        public static CardData generateZeroDateCard(String locale, int yearShift) {
+        public static CardData generateZeroDateCard(String locale) {
 
             return new CardData(
                     generateApprovedCardNumber(),

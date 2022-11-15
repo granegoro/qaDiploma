@@ -21,17 +21,11 @@ public class PayWithCardTest {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
-//    @BeforeEach
-//    void setUpSutUrl() {
-//        open("http://localhost:8080", MainPage.class);
-//    }
-
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
 //        SQLHelper.cleanDatabase();
     }
-
 
     @Test
     void shouldSuccessfullyPayWithCard() {
@@ -41,6 +35,7 @@ public class PayWithCardTest {
         var card = DataHelper.Payment
                 .generateValidApprovedCard("en", 3, 3);
         paymentPage.makePayment(card);
+        paymentPage.findPushedContinueButton();
         paymentPage.findSuccessMessage();
     }
 
@@ -51,10 +46,66 @@ public class PayWithCardTest {
         var card = DataHelper.Payment.generateEmptyFieldsCard();
         paymentPage.makePayment(card);
         paymentPage.findEmptyFieldErrors();
-
-
-
     }
+
+    //Card number field validation
+
+    @Test
+    void shouldFailIfInsufficientCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generateInsufficientNumberCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfOutOfBaseCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generateOutOfBaseNumberCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfOneFigureMonthCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generateOneFigureMonthCard("en", 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfOneFigureYearCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generateOneFigureMonthCard("en", 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfZerosCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generateZeroDateCard("en");
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    @Test
+    void shouldFailIfDateInPastCardNumber() {
+        var mainPage = open("http://localhost:8080", MainPage.class);
+        var paymentPage= mainPage.payWithCard();
+        var card = DataHelper.Payment.generatePastDateCard("en", 3, 3);
+        paymentPage.makePayment(card);
+        paymentPage.findImproperFormatError();
+    }
+
+    //Holder name field validation
+
 //    var loginPage = open("http://localhost:9999", LoginPageV2.class);
 //    var authInfo = DataHelper.getAuthInfo();
 //    var verificationPage = loginPage.validLogin(authInfo);
