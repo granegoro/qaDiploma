@@ -19,33 +19,6 @@ public class SQLHelper {
     private SQLHelper() {
     }
 
-    @SneakyThrows
-    private static Connection conn() {
-        return getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
-    }
-
-    @SneakyThrows
-    public static void cleanDatabase() {
-        var connection = conn();
-        runner.execute(connection, "DELETE FROM app.order_entity");
-        runner.execute(connection, "DELETE FROM app.payment_entity");
-        runner.execute(connection, "DELETE FROM app.credit_request_entity");
-    }
-
-    @SneakyThrows
-    public static String getCardStatus() {
-        String query = "SELECT * FROM app.payment_entity";
-        val runner = new QueryRunner();
-        try (Connection connection = conn()) {
-            val cardStatus = runner.query(connection, query,
-                    new BeanHandler<>(PaymentEntity.class));
-            return cardStatus.getStatus();
-        }
-}
-
-
-    //
-
     @Data
     @NoArgsConstructor
 
@@ -76,6 +49,35 @@ public class SQLHelper {
         String status;
         String transaction_id;
     }
+
+    @SneakyThrows
+    private static Connection conn() {
+        return getConnection("jdbc:mysql://localhost:3306/app", "app", "pass");
+    }
+
+    @SneakyThrows
+    public static void cleanDatabase() {
+        var connection = conn();
+        runner.execute(connection, "DELETE FROM app.order_entity");
+        runner.execute(connection, "DELETE FROM app.payment_entity");
+        runner.execute(connection, "DELETE FROM app.credit_request_entity");
+    }
+
+    @SneakyThrows
+    public static String getCardStatus() {
+        String query = "SELECT * FROM app.payment_entity";
+        val runner = new QueryRunner();
+        try (Connection connection = conn()) {
+            val cardStatus = runner.query(connection, query,
+                    new BeanHandler<>(PaymentEntity.class));
+            return cardStatus.getStatus();
+        }
+}
+
+
+    //
+
+
 
     //
 
