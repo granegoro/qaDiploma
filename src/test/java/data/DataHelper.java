@@ -113,7 +113,7 @@ public class DataHelper {
     }
 
     public static String generateCVV() {
-        String cvv = faker.address().streetAddressNumber();
+        String cvv = faker.address().streetAddressNumber() + "1";
         return cvv;
     }
 

@@ -58,11 +58,11 @@ public class PaymentPage {
     }
 
     public void findSuccessMessage() {
-        successMessage.shouldBe(visible, Duration.ofSeconds(20));
+        successMessage.shouldBe(visible, Duration.ofSeconds(30));
     }
 
     public void findFailureMessage() {
-        failureMessage.shouldBe(visible, Duration.ofSeconds(20));
+        failureMessage.shouldBe(visible, Duration.ofSeconds(30));
     }
 
     public void findImproperFormatError() {

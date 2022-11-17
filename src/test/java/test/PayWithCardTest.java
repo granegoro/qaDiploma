@@ -27,18 +27,24 @@ public class PayWithCardTest {
 //        SQLHelper.cleanDatabase();
     }
 
+    String sutUrl = "http://localhost:8080";
+
     //Debit
 
     @Test
     void shouldPassIfValidApprovedCard() {
 
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(sutUrl, MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
                 .generateValidApprovedCard("en", 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findSuccessMessage();
+
+        var statusExpected = "APPROVED";
+        var statusActual = SQLHelper.getCardStatus();
+        Assertions.assertEquals(statusExpected, statusActual);
     }
 
     @Test
