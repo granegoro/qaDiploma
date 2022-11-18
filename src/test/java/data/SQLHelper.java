@@ -13,32 +13,39 @@ import static java.sql.DriverManager.getConnection;
 
 public class SQLHelper {
 
-    private static Connection connection;
-
-    public static Connection getConnection() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/app",
-                    "app", "pass");
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return connection;
+    private SQLHelper(){
     }
 
-    public static void dropDataBase() {
-        val runner = new QueryRunner();
-        val order = "DELETE FROM app.order_entity";
-        val payment = "DELETE FROM app.payment_entity";
-        val creditRequest = "DELETE FROM app.credit_request_entity";
-
-        try (val connection = getConnection()) {
-            runner.update(connection, order);
-            runner.update(connection, payment);
-            runner.update(connection, creditRequest);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+    @SneakyThrows
+    private static Connection getConnection(){
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/app",
+                "app", "pass");
     }
+//    public static Connection getConnection() {
+//        try {
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/app",
+//                    "app", "pass");
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
+//        return connection;
+//    }
+
+//    public static void dropDataBase() {
+//        val runner = new QueryRunner();
+//        val order = "DELETE FROM app.order_entity";
+//        val payment = "DELETE FROM app.payment_entity";
+//        val creditRequest = "DELETE FROM app.credit_request_entity";
+//
+//        try (val connection = getConnection()) {
+//            runner.update(connection, order);
+//            runner.update(connection, payment);
+//            runner.update(connection, creditRequest);
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
+//    }
+
 
     public static String getCardStatusForPayment() {
         String statusQuery = "SELECT * FROM app.payment_entity";

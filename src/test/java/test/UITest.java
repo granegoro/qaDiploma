@@ -1,21 +1,17 @@
 package test;
 
-import com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
-import org.apache.http.io.SessionOutputBuffer;
 import org.junit.jupiter.api.*;
 import page.MainPage;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
-import static data.DataHelper.*;
 import static data.SQLHelper.getCardStatusForPayment;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PayWithCardTest {
+public class UITest {
 
     @BeforeAll
     static void setUpAll() {
@@ -44,7 +40,7 @@ public class PayWithCardTest {
         paymentPage.findSuccessMessage();
 
 
-        val expectedStatus = "DECLINED";
+        val expectedStatus = "APPROVED";
         val actualStatus = getCardStatusForPayment();
         assertEquals(expectedStatus, actualStatus);
     }
@@ -52,13 +48,17 @@ public class PayWithCardTest {
     @Test
     void shouldFailIfValidDeclinedCard() {
 
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(sutUrl, MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
                 .generateValidDeclinedCard("en", 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findFailureMessage();
+
+        val expectedStatus = "DECLINED";
+        val actualStatus = getCardStatusForPayment();
+        assertEquals(expectedStatus, actualStatus);
     }
 
     //Credit
