@@ -3,7 +3,6 @@ package test;
 import com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
-import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
 import org.apache.http.io.SessionOutputBuffer;
@@ -13,6 +12,8 @@ import page.MainPage;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static data.DataHelper.*;
+import static data.SQLHelper.getCardStatusForPayment;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PayWithCardTest {
 
@@ -42,9 +43,10 @@ public class PayWithCardTest {
         paymentPage.findPushedContinueButton();
         paymentPage.findSuccessMessage();
 
-//        var statusExpected = "APPROVED";
-//        var statusActual = SQLHelper.getCardStatus();
-//        Assertions.assertEquals(statusExpected, statusActual);
+
+        val expectedStatus = "DECLINED";
+        val actualStatus = getCardStatusForPayment();
+        assertEquals(expectedStatus, actualStatus);
     }
 
     @Test
