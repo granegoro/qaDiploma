@@ -2,14 +2,13 @@ package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
+import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
 import org.junit.jupiter.api.*;
 import page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static data.SQLHelper.getCardStatusForPayment;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UITest {
 
@@ -21,7 +20,7 @@ public class UITest {
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
-//        SQLHelper.cleanDatabase();
+        SQLHelper.cleanDatabase();
     }
 
     String sutUrl = "http://localhost:8080";
@@ -38,11 +37,6 @@ public class UITest {
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findSuccessMessage();
-
-
-        val expectedStatus = "APPROVED";
-        val actualStatus = getCardStatusForPayment();
-        assertEquals(expectedStatus, actualStatus);
     }
 
     @Test
@@ -55,10 +49,6 @@ public class UITest {
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findFailureMessage();
-
-        val expectedStatus = "DECLINED";
-        val actualStatus = getCardStatusForPayment();
-        assertEquals(expectedStatus, actualStatus);
     }
 
     //Credit
