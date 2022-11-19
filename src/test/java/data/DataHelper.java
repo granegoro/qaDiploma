@@ -2,8 +2,6 @@ package data;
 
 import com.github.javafaker.Faker;
 import lombok.Value;
-import org.openqa.selenium.Keys;
-import page.MainPage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,8 +9,6 @@ import java.util.Locale;
 import java.util.Random;
 
 public class DataHelper {
-
-    static String clearAll = Keys.chord(Keys.SHIFT, Keys.HOME) + Keys.DELETE;
 
     static Faker faker = new Faker(new Locale("en"));
 
