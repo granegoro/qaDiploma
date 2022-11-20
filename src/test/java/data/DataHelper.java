@@ -82,7 +82,7 @@ public class DataHelper {
     }
 
     public static String generateCyrillicHolderName(String locale) {
-        String name = fakerCyrillic.address().firstName() + fakerCyrillic.address().lastName();
+        String name = fakerCyrillic.address().firstName() + " " + fakerCyrillic.address().lastName();
         return name;
     }
 
