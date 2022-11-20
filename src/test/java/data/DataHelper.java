@@ -94,7 +94,7 @@ public class DataHelper {
     }
 
     public static String generateNumericHolderName() {
-        String name = faker.address().streetAddressNumber() + faker.address().streetAddressNumber();
+        String name = faker.address().streetAddressNumber() + " " +  faker.address().streetAddressNumber();
         return name;
     }
 
@@ -104,8 +104,8 @@ public class DataHelper {
     }
 
     public static String generateExtensiveHolderName(String locale) {
-        String name = faker.address().firstName() + faker.address().firstName()
-                + faker.address().firstName();
+        String name = faker.address().firstName() + " " + faker.address().firstName()
+                + " " + faker.address().firstName();
         return name;
     }
 
