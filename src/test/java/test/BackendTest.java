@@ -1,6 +1,7 @@
 package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
+import data.DataHelper;
 import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
@@ -31,7 +32,10 @@ public class BackendTest {
     @Test
     void shouldGetStatusWhenApprovedDebit() {
 
-        paymentActionDebitApproved();
+        val card = DataHelper.Payment
+                .generateValidApprovedCard("en", 3, 3);
+
+        paymentActionDebitApproved(card);
 
         val expectedStatus = "APPROVED";
         val actualStatus = getCardStatusForDebit();
@@ -41,7 +45,10 @@ public class BackendTest {
     @Test
     void shouldGetStatusWhenDeclinedDebit() {
 
-        paymentActionDebitDeclined();
+        val card = DataHelper.Payment
+                .generateValidDeclinedCard("en", 3, 3);
+
+        paymentActionDebitDeclined(card);
 
         val expectedStatus = "DECLINED";
         val actualStatus = getCardStatusForDebit();
@@ -53,7 +60,10 @@ public class BackendTest {
     @Test
     void shouldGetStatusWhenApprovedCredit() {
 
-        paymentActionCreditApproved();
+        val card = DataHelper.Payment
+                .generateValidApprovedCard("en", 3, 3);
+
+        paymentActionCreditApproved(card);
 
         val expectedStatus = "APPROVED";
         val actualStatus = getCardStatusForCredit();
@@ -63,7 +73,10 @@ public class BackendTest {
     @Test
     void shouldGetStatusWhenDeclinedCredit() {
 
-        paymentActionCreditDeclined();
+        val card = DataHelper.Payment
+                .generateValidDeclinedCard("en", 3, 3);
+
+        paymentActionCreditDeclined(card);
 
         val expectedStatus = "DECLINED";
         val actualStatus = getCardStatusForCredit();

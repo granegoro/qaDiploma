@@ -52,7 +52,6 @@ public class PaymentPage {
         continueButton.click();
     }
 
-
     public void findPushedContinueButton() {
         pushedContinueButton.shouldBe(visible, Duration.ofSeconds(20));
     }
@@ -69,10 +68,6 @@ public class PaymentPage {
         improperFormatError.shouldBe(visible);
     }
 
-    public void findEmptyFieldError() {
-        emptyFieldError.shouldBe(visible);
-    }
-
 
     public void findEmptyFieldErrors() {
         emptyCardFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
@@ -81,10 +76,6 @@ public class PaymentPage {
         emptyHolderFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
         emptyCvvFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
     }
-
-//    public void findEmptyHolderFieldError() {
-//        emptyHolderFieldError.shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible);
-//    }
 
     public void findInvalidDateError() {
         invalidDateError.shouldBe(visible);
