@@ -8,23 +8,7 @@ import java.util.Locale;
 
 public class APIHelper {
 
-    static Faker faker = new Faker(new Locale("en"));
-
     static String sutUrl = "http://localhost:8080";
-
-//    static String requestBodyApproved = "{\n" +
-//            "  \"number\": \"4444 4444 4444 4441\",\n" +
-//            "  \"year\": \"25\",\n" +
-//            "  \"month\": \"09\",\n" +
-//            "  \"holder\": \"One Two\",\n" +
-//            "  \"cvc\": \"123\"" + "}";
-//
-//   static String requestBodyDeclined = "{\n" +
-//            "  \"number\": \"4444 4444 4444 4442\",\n" +
-//            "  \"year\": \"25\",\n" +
-//            "  \"month\": \"09\",\n" +
-//            "  \"holder\": \"One Two\",\n" +
-//            "  \"cvc\": \"123\"" + "}";
 
     public static void paymentActionDebitApproved(DataHelper.Payment.CardData cardData) {
         RestAssured.baseURI = sutUrl;
