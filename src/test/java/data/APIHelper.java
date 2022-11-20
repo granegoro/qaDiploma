@@ -1,10 +1,7 @@
 package data;
 
-import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-
-import java.util.Locale;
 
 public class APIHelper {
 
