@@ -16,14 +16,17 @@ public class SQLHelper {
     }
 
     @SneakyThrows
-    private static Connection getConnection(){
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/app",
-                "app", "pass");
+    public static Connection getConnection(){
+        var url = System.getProperty("db.url");
+        var login = System.getProperty("db.login");
+        var password = System.getProperty("db.password");
+
+        return DriverManager.getConnection(url, login, password);
     }
 
     @SneakyThrows
     public static void cleanDatabase() {
-        val runner = new QueryRunner();
+        var runner = new QueryRunner();
         var connection = getConnection();
         runner.execute(connection, "DELETE FROM app.order_entity");
         runner.execute(connection, "DELETE FROM app.payment_entity");
@@ -31,10 +34,10 @@ public class SQLHelper {
     }
 
     public static String getCardStatusForDebit() {
-        String statusQuery = "SELECT * FROM app.payment_entity";
-        val runner = new QueryRunner();
+        var statusQuery = "SELECT * FROM app.payment_entity";
+        var runner = new QueryRunner();
         try (Connection connection = getConnection()) {
-            val cardStatus = runner.query(connection, statusQuery,
+            var cardStatus = runner.query(connection, statusQuery,
                     new BeanHandler<>(PaymentEntity.class));
             return cardStatus.getStatus();
         } catch (SQLException sqlException) {
@@ -44,10 +47,10 @@ public class SQLHelper {
     }
 
     public static String getCardStatusForCredit() {
-        String statusQuery = "SELECT * FROM app.credit_request_entity";
-        val runner = new QueryRunner();
+        var statusQuery = "SELECT * FROM app.credit_request_entity";
+        var runner = new QueryRunner();
         try (Connection connection = getConnection()) {
-            val cardStatus = runner.query(connection, statusQuery,
+            var cardStatus = runner.query(connection, statusQuery,
                     new BeanHandler<>(CreditRequestEntity.class));
             return cardStatus.getStatus();
         } catch (SQLException sqlException) {

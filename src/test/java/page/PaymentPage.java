@@ -3,8 +3,6 @@ package page;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import data.DataHelper;
-
-import javax.xml.crypto.Data;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
@@ -22,11 +20,8 @@ public class PaymentPage {
     private final SelenideElement cvvField = $("input[placeholder='999']");
 
     private final SelenideElement improperFormatError = $(byText("Неверный формат"));
-    private final SelenideElement emptyFieldError = $(byText("Поле обязательно для заполнения"));
     private final SelenideElement invalidDateError = $(byText("Неверно указан срок действия карты"));
     private final SelenideElement expiredDateError = $(byText("Истёк срок действия карты"));
-
-    private final SelenideElement statusMessage = $(".notification");
 
     private final SelenideElement successMessage = $(byText("Операция одобрена Банком."));
     private final SelenideElement failureMessage = $(byText("Ошибка! Банк отказал в проведении операции."));

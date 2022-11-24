@@ -16,28 +16,23 @@ public class DataHelper {
 
 
     public static String generateApprovedCardNumber() {
-        String number = ("4444 4444 4444 4441");
-        return number;
+        return "4444 4444 4444 4441";
     }
 
     public static String generateDeclinedCardNumber() {
-        String number = ("4444 4444 4444 4442");
-        return number;
+        return "4444 4444 4444 4442";
     }
 
     public static String generateInvalidCardNumberIfLessSymbols() {
-        String number = ("4444 4444 4444");
-        return number;
+        return "4444 4444 4444";
     }
 
     public static String generateInvalidCardNumberIfOutOfBase() {
-        String number = ("6758 4827 4657 1109");
-        return number;
+        return "6758 4827 4657 1109";
     }
 
     public static String generateMonth(int monthShift) {
-        String month = LocalDate.now().plusMonths(monthShift).format(DateTimeFormatter.ofPattern("MM"));
-        return month;
+        return (LocalDate.now().plusMonths(monthShift).format(DateTimeFormatter.ofPattern("MM")));
     }
 
     public static String generateUnrealMonth() {
@@ -48,23 +43,19 @@ public class DataHelper {
     }
 
     public static String generateMonthInPast(int monthShift) {
-        String month = LocalDate.now().minusMonths(monthShift).format(DateTimeFormatter.ofPattern("MM"));
-        return month;
+        return (LocalDate.now().minusMonths(monthShift).format(DateTimeFormatter.ofPattern("MM")));
     }
 
     public static String generateYear(int yearShift) {
-        String year = LocalDate.now().plusYears(yearShift).format(DateTimeFormatter.ofPattern("yy"));
-        return year;
+        return (LocalDate.now().plusYears(yearShift).format(DateTimeFormatter.ofPattern("yy")));
     }
 
     public static String generateYearInPast(int yearShift) {
-        String year = LocalDate.now().minusYears(yearShift).format(DateTimeFormatter.ofPattern("yy"));
-        return year;
+        return (LocalDate.now().minusYears(yearShift).format(DateTimeFormatter.ofPattern("yy")));
     }
 
     public static String generateDateZeros() {
-        String zeroDate = "00";
-        return zeroDate;
+        return "00";
     }
 
     public static String generateOneFigureDate() {
@@ -76,14 +67,12 @@ public class DataHelper {
 
     }
 
-    public static String generateValidHolderName(String locale) {
-        String name = faker.address().firstName() + " " + faker.address().lastName();
-        return name;
+    public static String generateValidHolderName() {
+        return (faker.address().firstName() + " " + faker.address().lastName());
     }
 
-    public static String generateCyrillicHolderName(String locale) {
-        String name = fakerCyrillic.address().firstName() + " " + fakerCyrillic.address().lastName();
-        return name;
+    public static String generateCyrillicHolderName() {
+        return (fakerCyrillic.address().firstName() + " " + fakerCyrillic.address().lastName());
     }
 
     public static String generateSymbolicHolderName() {
@@ -94,58 +83,52 @@ public class DataHelper {
     }
 
     public static String generateNumericHolderName() {
-        String name = faker.address().streetAddressNumber() + " " +  faker.address().streetAddressNumber();
-        return name;
+        return (faker.address().streetAddressNumber() + " " +  faker.address().streetAddressNumber());
     }
 
-    public static String generateInsufficientHolderName(String locale) {
-        String name = faker.address().firstName();
-        return name;
+    public static String generateInsufficientHolderName() {
+        return (faker.address().firstName());
     }
 
-    public static String generateExtensiveHolderName(String locale) {
-        String name = faker.address().firstName() + " " + faker.address().firstName()
-                + " " + faker.address().firstName();
-        return name;
+    public static String generateExtensiveHolderName() {
+        return (faker.address().firstName() + " " + faker.address().firstName()
+                + " " + faker.address().firstName());
     }
 
     public static String generateCVV() {
-        String cvv = faker.address().streetAddressNumber() + "1";
-        return cvv;
+        return (faker.address().streetAddressNumber() + "1");
     }
 
     public static String generateCVVZeros() {
-        String cvv = "000";
-        return cvv;
+        return "000";
     }
 
     public static String generateCVVLessThanThreeFigures(int figure) {
-        String cvv = "0" + figure;
-        return cvv;
+        return ("0" + figure);
     }
 
     public static class Payment {
         private Payment() {
         }
 
-        public static CardData generateValidApprovedCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateValidApprovedCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateValidDeclinedCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateValidDeclinedCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateDeclinedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
@@ -155,112 +138,112 @@ public class DataHelper {
             return new CardData("", "", "", "", "");
         }
 
-        public static CardData generateInsufficientNumberCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateInsufficientNumberCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateInvalidCardNumberIfLessSymbols(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateOutOfBaseNumberCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateOutOfBaseNumberCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateInvalidCardNumberIfOutOfBase(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateOneFigureMonthCard(String locale, int yearShift) {
+        public static CardData generateOneFigureMonthCard(int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateOneFigureDate(),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateOneFigureYearCard(String locale, int monthShift) {
+        public static CardData generateOneFigureYearCard(int monthShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateYear(monthShift),
                     generateOneFigureDate(),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateZeroDateCard(String locale) {
+        public static CardData generateZeroDateCard() {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateDateZeros(),
                     generateDateZeros(),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generatePastDateCard(String locale, int monthShift, int yearShift) {
+        public static CardData generatePastDateCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateMonthInPast(monthShift),
                     generateYearInPast(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateUnrealMonthCard(String locale, int yearShift) {
+        public static CardData generateUnrealMonthCard(int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateUnrealMonth(),
                     generateYear(yearShift),
-                    generateValidHolderName(locale),
+                    generateValidHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateInsufficientHolderCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateInsufficientHolderCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateInsufficientHolderName(locale),
+                    generateInsufficientHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateExtensiveHolderCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateExtensiveHolderCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateExtensiveHolderName(locale),
+                    generateExtensiveHolderName(),
                     generateCVV()
             );
         }
 
-        public static CardData generateCyrillicHolderCard(String locale, int monthShift, int yearShift) {
+        public static CardData generateCyrillicHolderCard(int monthShift, int yearShift) {
 
             return new CardData(
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateCyrillicHolderName(locale),
+                    generateCyrillicHolderName(),
                     generateCVV()
             );
         }
@@ -293,7 +276,7 @@ public class DataHelper {
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateNumericHolderName(),
+                    generateValidHolderName(),
                     generateCVVLessThanThreeFigures(figure)
             );
         }
@@ -304,7 +287,7 @@ public class DataHelper {
                     generateApprovedCardNumber(),
                     generateMonth(monthShift),
                     generateYear(yearShift),
-                    generateNumericHolderName(),
+                    generateValidHolderName(),
                     generateCVVZeros()
             );
         }

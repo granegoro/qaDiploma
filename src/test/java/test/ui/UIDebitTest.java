@@ -1,4 +1,4 @@
-package test;
+package test.ui;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataHelper;
@@ -9,7 +9,7 @@ import page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class UITest {
+public class UIDebitTest {
 
     @BeforeAll
     static void setUpAll() {
@@ -22,17 +22,12 @@ public class UITest {
         SQLHelper.cleanDatabase();
     }
 
-    String sutUrl = "http://localhost:8080";
-
-    //Debit
-
     @Test
     void shouldPassIfValidApprovedCard() {
 
-        var mainPage = open(sutUrl, MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment
-                .generateValidApprovedCard("en", 3, 3);
+        var card = DataHelper.Payment.generateValidApprovedCard( 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findSuccessMessage();
@@ -41,35 +36,9 @@ public class UITest {
     @Test
     void shouldFailIfValidDeclinedCard() {
 
-        var mainPage = open(sutUrl, MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment
-                .generateValidDeclinedCard("en", 3, 3);
-        paymentPage.makePayment(card);
-        paymentPage.findPushedContinueButton();
-        paymentPage.findFailureMessage();
-    }
-
-    //Credit
-
-    @Test
-    void shouldPassIfValidApprovedCredit() {
-
-        var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage = mainPage.payWithCredit();
-        var card = DataHelper.Payment
-                .generateValidDeclinedCard("en", 3, 3);
-        paymentPage.makePayment(card);
-        paymentPage.findPushedContinueButton();
-        paymentPage.findSuccessMessage();
-    }
-    @Test
-    void shouldFailIfValidDeclinedCredit() {
-
-        var mainPage = open("http://localhost:8080", MainPage.class);
-        var paymentPage = mainPage.payWithCredit();
-        var card = DataHelper.Payment
-                .generateValidDeclinedCard("en", 3, 3);
+        var card = DataHelper.Payment.generateValidDeclinedCard( 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findPushedContinueButton();
         paymentPage.findFailureMessage();
@@ -79,7 +48,7 @@ public class UITest {
 
     @Test
     void shouldFailIfBlankFields() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateEmptyFieldsCard();
         paymentPage.makePayment(card);
@@ -90,20 +59,20 @@ public class UITest {
 
     @Test
     void shouldFailIfInsufficientCardNumber() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCredit();
         var card = DataHelper.Payment
-                .generateInsufficientNumberCard("en", 3, 3);
+                .generateInsufficientNumberCard( 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfOutOfBaseCardNumber() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
-                .generateOutOfBaseNumberCard("en", 3, 3);
+                .generateOutOfBaseNumberCard( 3, 3);
         paymentPage.makePayment(card);
         paymentPage.findFailureMessage();
     }
@@ -111,64 +80,64 @@ public class UITest {
     // Date
     @Test
     void shouldFailIfOneFigureMonthCardNumber() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generateOneFigureMonthCard("en", 3);
+        var card = DataHelper.Payment.generateOneFigureMonthCard( 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
      void shouldFailIfOneFigureYearCardNumber() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generateOneFigureYearCard("en", 3);
+        var card = DataHelper.Payment.generateOneFigureYearCard( 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfZerosDate() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generateZeroDateCard("en");
+        var card = DataHelper.Payment.generateZeroDateCard();
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfMonthInPast() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generatePastDateCard("en", 3, 0);
+        var card = DataHelper.Payment.generatePastDateCard(3, 0);
         paymentPage.makePayment(card);
         paymentPage.findExpiredDateError();
     }
 
     @Test
     void shouldFailIfYearInPast() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generatePastDateCard("en", 0, 3);
+        var card = DataHelper.Payment.generatePastDateCard(0, 3);
         paymentPage.makePayment(card);
         paymentPage.findExpiredDateError();
     }
 
     @Test
     void shouldFailIfUnrealMonth() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
-        var card = DataHelper.Payment.generateUnrealMonthCard("en",  3);
+        var card = DataHelper.Payment.generateUnrealMonthCard(3);
         paymentPage.makePayment(card);
         paymentPage.findInvalidDateError();
     }
 
     @Test
     void shouldFailIfTooFarFutureYear() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
-                .generateValidApprovedCard("en", 3, 10);
+                .generateValidApprovedCard(3, 10);
         paymentPage.makePayment(card);
         paymentPage.findInvalidDateError();
     }
@@ -177,37 +146,37 @@ public class UITest {
 
     @Test
     void shouldFailIfInsufficientHolder() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
-                .generateInsufficientHolderCard("en", 3, 3);
+                .generateInsufficientHolderCard(3, 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfExtensiveHolder() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
-                .generateExtensiveHolderCard("en", 3, 3);
+                .generateExtensiveHolderCard(3, 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfCyrillicHolder() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
-                .generateCyrillicHolderCard("ru", 3, 3);
+                .generateCyrillicHolderCard(3, 3);
         paymentPage.makePayment(card);
         paymentPage.findImproperFormatError();
     }
 
     @Test
     void shouldFailIfNumericHolder() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateNumericHolderCard(3, 3);
         paymentPage.makePayment(card);
@@ -216,7 +185,7 @@ public class UITest {
 
     @Test
     void shouldFailIfSymbolicHolder() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateSymbolicHolderCard(3, 3);
         paymentPage.makePayment(card);
@@ -227,7 +196,7 @@ public class UITest {
 
     @Test
     void shouldFailIfInsufficientCvv() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment
                 .generateInsufficientCvvCard(3, 3, 3);
@@ -237,7 +206,7 @@ public class UITest {
 
     @Test
     void shouldFailIfIfZerosCvv() {
-        var mainPage = open("http://localhost:8080", MainPage.class);
+        var mainPage = open(System.getProperty("sut.url"), MainPage.class);
         var paymentPage = mainPage.payWithCard();
         var card = DataHelper.Payment.generateZeroCvvCard(3, 3);
         paymentPage.makePayment(card);
