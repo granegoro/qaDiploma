@@ -21,17 +21,8 @@
 ```
 docker-compose up
 ```
-Параметры для запуска контейнеров 
-содержатся в файле 'docker-compose.yml'. Необходимо предварительно указать в файле application.properties учётные 
-данные и URL для подключения к необходимой СУБД:
-```
-spring.datasource.url=jdbc:mysql://localhost:3306/app - для MySQL
-```
-```
-spring.datasource.url=jdbc:postgresql://localhost:5432/app - для PostrgreSQL
-```
 3. Запустить симулятор банковских сервисов, предварительно переместившись в 
-каталог 'gate-simulator'. Запуск осуществляется командой:
+каталог `gate-simulator`. Запуск осуществляется командой:
 ```
 npm start
 ```
@@ -46,6 +37,11 @@ java -jar artifacts/aqa-shop.jar
 Дважды нажать клавишу Ctrl, в открывшемся окне ввести команду:
 ```
 ./gradlew clean test
+```
+По умолчанию будет выполнено подключение к СУБД MySQL.
+Для подключения к PostgreSQL необходимо при запуске тестов передать параметр:
+```
+./gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
 ```
 
 ## Формирование Allure Report
